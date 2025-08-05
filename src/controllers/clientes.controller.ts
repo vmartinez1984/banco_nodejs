@@ -1,19 +1,26 @@
+import { ClienteBl } from "../bl/cliente.bl";
 import { ClienteDtoIn } from "../dtos/cliente.dto";
 import { Request, Response } from "express";
 
 export class ClientesController {
-  async agregarAsync(req: Request, res: Response) {
-    let cliente: ClienteDtoIn = {
-      contrasenia: req.body.contrasenia,
-      correo: req.body.correo,
-      direccion: req.body.direccion,
-      estadoDeNacimiento: req.body.estadoDeNacimiento,
-      fechaDeNacimiento: req.body.fechaDeNacimiento,
-      nombre: req.body.nombre,
-      primerApellido: req.body.primerApellido,
-      segundoApellido: req.body.segundoApellido,
-      telefono: req.body.telefono
-    };
+  private clienteBl : ClienteBl
+
+  constructor(){
+    this.clienteBl = new ClienteBl()
+  }
+
+  obtenerAsync(arg0: string, obtenerAsync: any) {
+    throw new Error("Method not implemented.");
+  }
+  
+  iniciarSesionAsync(arg0: string, iniciarSesionAsync: any) {
+    throw new Error("Method not implemented.");
+  }
+
+  agregarAsync= async(req: Request, res: Response) => {    
+    let cliente = new ClienteDtoIn(req.body)    
+    this.clienteBl.agregarAsync(cliente)
+
     res.status(202).json(cliente);
   }
 }

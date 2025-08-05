@@ -8,9 +8,12 @@ export class ClienteRouter{
     constructor(){
         this.cliente = new ClientesController()
         this.router = express.Router()
+        this.setUpRoute()
     }
 
     private setUpRoute(){
-        this.router.post("/", this.cliente.agregarAsync)
+        this.router.post("/Clientes", this.cliente.agregarAsync)
+        //this.router.post("/iniciarSesiones", this.cliente.iniciarSesionAsync)
+        //this.router.get("/", this.cliente.obtenerAsync)
     }
 }

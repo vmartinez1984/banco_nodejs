@@ -1,5 +1,5 @@
 export class ClabeService{
-    agregarAsync(){
-        
+    obtenerClabeAsync(depositoId: string):string{
+        return ''
     }
 }
