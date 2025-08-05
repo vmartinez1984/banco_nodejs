@@ -1,17 +1,18 @@
 import express, { Router } from "express";
-import { DepositoController } from "../controllers/deposito.controller";
+import { AhorroController } from "../controllers/ahorro.controller";
 
 export class DepositoRoute{
-    private deposito: DepositoController
+    private ahorroController: AhorroController
     router: Router
 
     constructor(){
-        this.deposito = new DepositoController()
+        this.ahorroController = new AhorroController()
         this.router = express.Router()
         this.setUpRoute()
     }
 
     private setUpRoute(){
-        this.router.get("/depositos/:clienteId", this.deposito.obtenerAsync)
+        this.router.get("/ahorros/:clienteId", this.ahorroController.obtenerAsync)
+        this.router.post("/ahorros/:ahorroId/depositos", this.ahorroController.depositarAsync)
     }
 }

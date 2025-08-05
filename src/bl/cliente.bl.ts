@@ -1,6 +1,6 @@
 import { ClienteDtoIn } from "../dtos/cliente.dto";
 import { IdDto } from "../dtos/Id.dto";
-import { DepositoEntity } from "../entities/deposito.entity";
+import { AhorroEntity } from "../entities/ahorro.entity";
 import { ClienteRepository } from "../repositories/cliente.repository";
 import { DepositoRepository } from "../repositories/deposito.repository";
 
@@ -15,7 +15,7 @@ export class ClienteBl {
 
     async agregarAsync(cliente: ClienteDtoIn): Promise<number> {
         let clienteId
-        let deposito = new DepositoEntity()
+        let deposito = new AhorroEntity()
 
         clienteId = await this.clienteRepository.agregarAsync(cliente.toEntity())        
         deposito.clienteId = clienteId

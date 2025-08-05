@@ -1,6 +1,6 @@
 import { generateGUID } from "../helpers/guid"
 
-export class DepositoEntity {
+export class AhorroEntity {
   clienteId?: number
   clabe?: string
   clienteGuid?: string

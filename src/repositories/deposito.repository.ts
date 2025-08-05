@@ -1,7 +1,19 @@
 import { MongoClient } from "mongodb";
-import { DepositoEntity } from "../entities/deposito.entity";
+import { AhorroEntity } from "../entities/ahorro.entity";
 
 export class DepositoRepository {
+
+    async obtenerPorIdAsync(depositoId: string): Promise<AhorroEntity> {
+        let entities
+
+        await this.connectAsync()
+        if (parseInt(depositoId))
+            entities = await this.collection.find({ id: Number(depositoId) }).toArray()
+        else
+            entities = await this.collection.find({ guid: depositoId }).toArray()
+
+        return entities[0]
+    }
 
     private client: MongoClient
     private collection: any
@@ -20,7 +32,7 @@ export class DepositoRepository {
         this.collection = db.collection(this.collectionName)
     }
 
-    async obtenerPorClienteIdAsync(clienteId: string): Promise<DepositoEntity[]> {
+    async obtenerPorClienteIdAsync(clienteId: string): Promise<AhorroEntity[]> {
         let entities
 
         await this.connectAsync()
@@ -28,16 +40,17 @@ export class DepositoRepository {
             entities = await this.collection.find({ clienteId: Number(clienteId) }).toArray()
         else
             entities = await this.collection.find({ clienteGuid: clienteId }).toArray()
-        console.log("entities", entities)
+        //console.log("entities", entities)
 
         return entities
     }
 
-    actualizarAsync(depositoEntity: DepositoEntity) {
-        throw new Error("Method not implemented.");
+    async actualizarAsync(entity: AhorroEntity) {
+        let query = {id: entity.id}
+        await this.collection.updateOne(query,{$set: entity})
     }
 
-    async agregarAsync(deposito: DepositoEntity): Promise<number> {
+    async agregarAsync(deposito: AhorroEntity): Promise<number> {
         await this.connectAsync()
 
         deposito.id = (await this.collection.countDocuments()) + 1;
