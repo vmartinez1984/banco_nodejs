@@ -1,18 +1,29 @@
-import { DepositoDto, MovimientoDtoIn } from "../dtos/deposito.dto";
+import { DepositoBl } from "../bl/deposito.bl"
+import { DepositoDto, MovimientoDtoIn } from "../dtos/deposito.dto"
+import { Request, Response } from "express"
 
-export class DepositoController{
+export class DepositoController {
+    private depositoBl: DepositoBl
 
-    obtenerAsync(clienteId: number): DepositoDto[]{
-        let depositos: DepositoDto[] =[]
-
-        return depositos
+    constructor() {
+        this.depositoBl = new DepositoBl()
     }
 
-    depositarAsync(depositoId: string,movimiento: MovimientoDtoIn){
-        
+    obtenerAsync = async (req: Request, res: Response) => {
+        let clienteId
+        let depositos
+
+        clienteId = req.params.clienteId
+        depositos = await this.depositoBl.obtenerPorClienteIdAsync(clienteId)
+
+        res.status(200).json(depositos)
     }
 
-    retirarAsync(depositoId: string,movimiento: MovimientoDtoIn){
-        
+    depositarAsync(depositoId: string, movimiento: MovimientoDtoIn) {
+
+    }
+
+    retirarAsync(depositoId: string, movimiento: MovimientoDtoIn) {
+
     }
 }

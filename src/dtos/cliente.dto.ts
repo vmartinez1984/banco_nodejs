@@ -1,4 +1,5 @@
 import { ClienteEntity } from "../entities/cliente.entity";
+import { generateGUID } from "../helpers/guid";
 
 export class ClienteDtoIn { 
 
@@ -24,7 +25,7 @@ export class ClienteDtoIn {
       this.segundoApellido = body.segundoApellido,
       this.telefono = body.telefono
     this.contrasenia = body.contrasenia
-    this.guid = this.generateGUID()
+    this.guid = generateGUID()
   }  
 
   toEntity(): ClienteEntity {
@@ -42,13 +43,6 @@ export class ClienteDtoIn {
     }
 
     return entity
-  }
-
-  generateGUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
   }
 }
 

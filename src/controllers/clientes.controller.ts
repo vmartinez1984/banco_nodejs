@@ -1,26 +1,27 @@
 import { ClienteBl } from "../bl/cliente.bl";
 import { ClienteDtoIn } from "../dtos/cliente.dto";
-import { Request, Response } from "express";
+import { Request, Response } from "express"
 
 export class ClientesController {
-  private clienteBl : ClienteBl
+  private clienteBl: ClienteBl
 
-  constructor(){
+  constructor() {
     this.clienteBl = new ClienteBl()
   }
 
-  obtenerAsync(arg0: string, obtenerAsync: any) {
-    throw new Error("Method not implemented.");
-  }
-  
-  iniciarSesionAsync(arg0: string, iniciarSesionAsync: any) {
-    throw new Error("Method not implemented.");
-  }
-
-  agregarAsync= async(req: Request, res: Response) => {    
-    let cliente = new ClienteDtoIn(req.body)    
+  agregarAsync = async (req: Request, res: Response) => {
+    let cliente = new ClienteDtoIn(req.body)
     this.clienteBl.agregarAsync(cliente)
 
     res.status(202).json(cliente);
   }
+
+  // obtenerAsync(arg0: string, obtenerAsync: any) {
+  //   throw new Error("Method not implemented.");
+  // }
+
+  // iniciarSesionAsync(arg0: string, iniciarSesionAsync: any) {
+  //   throw new Error("Method not implemented.");
+  // }
+
 }

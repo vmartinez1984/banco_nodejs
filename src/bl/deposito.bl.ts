@@ -12,22 +12,26 @@ export class DepositoBl {
         this.clabeService = new ClabeService()
     }
 
-    agregarAsync(deposito: DepositoDtoIn): number {
-        let depositoId
-        let depositoEntity : DepositoEntity = {
-            clienteGuid : deposito.clienteGuid,
-            clabe: ''
-        }
-        depositoId = this.depositoRepository.agregarAsync(depositoEntity)
-        depositoEntity.clabe = this.clabeService.obtenerClabeAsync(depositoId.toString())
-        this.depositoRepository.actualizarAsync(depositoEntity)
+    // agregarAsync(deposito: DepositoDtoIn): number {
+    //     let depositoId
+    //     let depositoEntity : DepositoEntity = {
+    //         clienteGuid : deposito.clienteGuid,
+    //         clabe: ''
+    //     }
+    //     depositoId = this.depositoRepository.agregarAsync(depositoEntity)
+    //     depositoEntity.clabe = this.clabeService.obtenerClabeAsync(depositoId.toString())
+    //     this.depositoRepository.actualizarAsync(depositoEntity)
         
-        return 0
-    }
+    //     return 0
+    // }
 
-    obtenerPorClienteIdAsync(clienteId: string): DepositoDto[] {
+    async obtenerPorClienteIdAsync(clienteId: string): Promise<DepositoDto[]> {
         let depositos: DepositoDto[] = []
+        let entities
 
+        entities = await this.depositoRepository.obtenerPorClienteIdAsync(clienteId)
+        //console.log(entities)
+        
         return depositos
     }
 
