@@ -4,7 +4,7 @@ export interface ClienteEntity {
     nombre: string
     primerApellido: string
     segundoApellido: string
-    fechaDeNacimiento: string
+    fechaDeNacimiento: Date
     estadoDeNacimiento: string
     telefono: string
     correo: string
