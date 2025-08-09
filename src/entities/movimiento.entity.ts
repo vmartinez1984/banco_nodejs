@@ -1,10 +1,10 @@
 export interface MovimientoEntity{
     id: number
-    cantidad: number
-    cantidadInicial: number
-    cantidadFinal: number
-    depositoEncodedKey: string
-    depositoId: number
+    monto: number
+    saldoInicial: number
+    saldoFinal: number
+    ahorroEncodedKey: string
+    ahorroId: number
     canalEncodedkey: string
     referencia: string
     concepto: string

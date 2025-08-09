@@ -4,7 +4,7 @@ export class IdDto {
         this.mensaje = mensaje
     }
 
-    public id: string
-    public encodedkey: string
+    public id: string = ""
+    public encodedkey: string = ""
     public mensaje: string
 }

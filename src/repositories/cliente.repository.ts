@@ -6,7 +6,8 @@ export class ClienteRepository {
         let entities
 
         await this.connectAsync()
-        if (parseInt(clienteGuid))
+        const regex = /^[0-9]*$/
+        if (regex.test(clienteGuid))
             entities = await this.collection.find({ id: Number(clienteGuid) }).toArray()
         else
             entities = await this.collection.find({ guid: clienteGuid }).toArray()

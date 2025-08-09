@@ -2,63 +2,77 @@ import { MongoClient } from "mongodb";
 import { AhorroEntity } from "../entities/ahorro.entity";
 
 export class DepositoRepository {
+  async obtenerPorClabeAsync(clabe: string): Promise<AhorroEntity> {
+    let entities;
 
-    async obtenerPorIdAsync(depositoId: string): Promise<AhorroEntity> {
-        let entities
+    await this.connectAsync();
+    entities = await this.collection.find({ clabe: clabe }).toArray();
+    console.log(entities);
 
-        await this.connectAsync()
-        if (parseInt(depositoId))
-            entities = await this.collection.find({ id: Number(depositoId) }).toArray()
-        else
-            entities = await this.collection.find({ guid: depositoId }).toArray()
+    return entities[0];
+  }
 
-        console.log(entities)
-        
-        return entities[0]
-    }
+  async obtenerPorIdAsync(depositoId: string): Promise<AhorroEntity> {
+    let entities;
 
-    private client: MongoClient
-    private collection: any
-    private dataBase = "BancoNode"
-    private collectionName = "depositos"
+    await this.connectAsync();
+    if (parseInt(depositoId))
+      entities = await this.collection
+        .find({ id: Number(depositoId) })
+        .toArray();
+    else entities = await this.collection.find({ guid: depositoId }).toArray();
 
-    constructor() {
-        let uri = "mongodb://root:123456@localhost:27017/"
-        this.client = new MongoClient(uri)
-        //this.connectAsync()
-    }
+    console.log(entities);
 
-    private async connectAsync() {
-        await this.client.connect()
-        let db = this.client.db(this.dataBase)
-        this.collection = db.collection(this.collectionName)
-    }
+    return entities[0];
+  }
 
-    async obtenerPorClienteIdAsync(clienteId: string): Promise<AhorroEntity[]> {
-        let entities
+  private client: MongoClient;
+  private collection: any;
+  private dataBase = "BancoNode";
+  private collectionName = "depositos";
 
-        await this.connectAsync()
-        if (parseInt(clienteId))
-            entities = await this.collection.find({ clienteId: Number(clienteId) }).toArray()
-        else
-            entities = await this.collection.find({ clienteGuid: clienteId }).toArray()
-        //console.log("entities", entities)
+  constructor() {
+    let uri = "mongodb://root:123456@localhost:27017/";
+    this.client = new MongoClient(uri);
+    //this.connectAsync()
+  }
 
-        return entities
-    }
+  private async connectAsync() {
+    await this.client.connect();
+    let db = this.client.db(this.dataBase);
+    this.collection = db.collection(this.collectionName);
+  }
 
-    async actualizarAsync(entity: AhorroEntity) {
-        let query = {id: entity.id}
-        await this.collection.updateOne(query,{$set: entity})
-    }
+  async obtenerPorClienteIdAsync(clienteId: string): Promise<AhorroEntity[]> {
+    let entities;
 
-    async agregarAsync(deposito: AhorroEntity): Promise<number> {
-        await this.connectAsync()
+    await this.connectAsync();
+    if (parseInt(clienteId))
+      entities = await this.collection
+        .find({ clienteId: Number(clienteId) })
+        .toArray();
+    else
+      entities = await this.collection
+        .find({ clienteGuid: clienteId })
+        .toArray();
+    //console.log("entities", entities)
 
-        deposito.id = (await this.collection.countDocuments()) + 1;
-        console.log("depositoID", deposito.id)
-        this.collection.insertOne(deposito)
+    return entities;
+  }
 
-        return deposito.id
-    }
+  async actualizarAsync(entity: AhorroEntity) {
+    let query = { id: entity.id };
+    await this.collection.updateOne(query, { $set: entity });
+  }
+
+  async agregarAsync(deposito: AhorroEntity): Promise<number> {
+    await this.connectAsync();
+
+    deposito.id = (await this.collection.countDocuments()) + 1;
+    console.log("depositoID", deposito.id);
+    this.collection.insertOne(deposito);
+
+    return deposito.id;
+  }
 }

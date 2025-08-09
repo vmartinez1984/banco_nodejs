@@ -27,18 +27,18 @@ export class SpeiUpdDto {
     mensaje: string
 
     constructor(body: any){
-        this.clabeDeOrigen = body.clabeDeOrigen
-        this.nombreDelOrdente = body.nombreDelOrdente
-        this.bancoOrdenante = body.bancoOrdenante
-        this.clabeDestino = body.clabeDestino
-        this.nombreDelBeneficiario = body.nombreDelBeneficiario
-        this.bancoDestino = body.bancoDestino
-        this.monto = body.monto
-        this.referencia = body.referencia
-        this.concepto = body.concepto
-        this.encodedKey = body.encodedKey
-        this.fechaDeTransferencia = body.fechaDeTransferencia
-        this.estado = body.estado
-        this.mensaje = body.mensaje
+        this.clabeDeOrigen = body.clabeDeOrigen || body.ClabeDeOrigen
+        this.nombreDelOrdente = body.nombreDelOrdente || body.NombreDelOrdente
+        this.bancoOrdenante = body.bancoOrdenante || body.BancoOrdenante
+        this.clabeDestino = body.clabeDestino || body.ClabeDestino
+        this.nombreDelBeneficiario = body.nombreDelBeneficiario || body.NombreDelBeneficiario
+        this.bancoDestino = body.bancoDestino || body.BancoDestino
+        this.monto = body.monto || body.Monto
+        this.referencia = body.referencia || body.Referencia
+        this.concepto = body.concepto   || body.Concepto
+        this.encodedKey = body.encodedKey || body.EncodedKey
+        this.fechaDeTransferencia = body.fechaDeTransferencia || body.FechaDeTransferencia
+        this.estado = body.estado || body.Estado
+        this.mensaje = body.mensaje || body.Mensaje
     }
 }

@@ -40,7 +40,9 @@ export class ClienteDtoIn {
       primerApellido: this.primerApellido,
       segundoApellido: this.segundoApellido,
       telefono: this.telefono,
-      guid: this.guid
+      guid: this.guid,
+      curp: "",
+      rfc:""
     }
 
     return entity

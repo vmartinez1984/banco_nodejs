@@ -11,6 +11,7 @@ export class BanxicoService {
         this.plaza = "180" //Ciudad de México
         this.numero = "009" //Banobras
         this.urlBase = "http://localhost:83"
+        //this.urlBase = "https://localhost:7110"
     }
 
     async obtenerClabeAsync(ahorroId: number, cliente: ClienteEntity): Promise<string> {
@@ -52,7 +53,7 @@ export class BanxicoService {
             redirect: "follow"
         };
 
-        let response = await fetch("http://localhost:83/api/Speis/Clabes/PersonasFisicas", requestOptions)
+        let response = await fetch(this.urlBase + "/api/Speis/Clabes/PersonasFisicas", requestOptions)
         if (response.ok) {
             const clabeDto = await response.json()
             console.log(clabeDto)
@@ -70,6 +71,7 @@ export class BanxicoService {
     }
 
     async obtenerClabeInfoAsync(clabeDestino: string): Promise<ClabeInfoDto | null> {
+        const url = this.urlBase + "/api/Speis/" + clabeDestino
         const myHeaders = new Headers();
         myHeaders.append("accept", "text/plain");
 
@@ -79,7 +81,7 @@ export class BanxicoService {
             redirect: "follow"
         };
 
-        const response = await fetch(this.urlBase + "/api/Speis/" + clabeDestino, requestOptions)
+        const response = await fetch(url, requestOptions)
         if (response.ok) {
             const clabeInfoDto = await response.json()
 
@@ -95,7 +97,7 @@ export class BanxicoService {
         myHeaders.append("Content-Type", "application/json");
 
         const raw = JSON.stringify(spei);
-
+        console.log("SpeiOutDto", raw)
         const requestOptions: RequestInit = {
             method: "POST",
             headers: myHeaders,

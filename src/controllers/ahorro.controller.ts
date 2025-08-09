@@ -61,7 +61,11 @@ export class AhorroController {
             return res.status(400).json({ mensaje: "Ni camarón tienes carnal" })        
 
         //Se pide la tranferencia a banxico
-        const data = await this.ahorroBl.trasferirPorSpeiAsync(transferencia, clabeInfoDto.banco, ahorroDto.clabe, ahorroDto.clienteGuid + "")
+        try {            
+            const data = await this.ahorroBl.trasferirPorSpeiAsync(transferencia, clabeInfoDto.banco, ahorroDto.clabe, req.params.ahorroId, ahorroDto.clienteGuid + "")
+        } catch (error) {
+            res.status(500).json({mensaje: "Valio bertha carnal, no se pudo enviar el camarón, intente más tarde"})
+        }
 
         res.status(201).json(transferencia)
     }
