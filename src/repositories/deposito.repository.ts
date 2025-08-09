@@ -12,6 +12,8 @@ export class DepositoRepository {
         else
             entities = await this.collection.find({ guid: depositoId }).toArray()
 
+        console.log(entities)
+        
         return entities[0]
     }
 

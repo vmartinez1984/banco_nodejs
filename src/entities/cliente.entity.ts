@@ -1,4 +1,6 @@
 export interface ClienteEntity {
+    rfc: string
+    curp: string
     id: any
     guid: string
     nombre: string

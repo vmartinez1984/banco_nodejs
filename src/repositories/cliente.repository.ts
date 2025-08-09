@@ -2,6 +2,19 @@ import { MongoClient } from "mongodb";
 import { ClienteEntity } from "../entities/cliente.entity";
 
 export class ClienteRepository {
+    async obtenerPorIdAsync(clienteGuid: string): Promise<ClienteEntity> {
+        let entities
+
+        await this.connectAsync()
+        if (parseInt(clienteGuid))
+            entities = await this.collection.find({ id: Number(clienteGuid) }).toArray()
+        else
+            entities = await this.collection.find({ guid: clienteGuid }).toArray()
+        //console.log(entities)
+
+        return entities[0]
+    }
+
     private client: MongoClient
     private collection: any
     private dataBase = "BancoNode"
@@ -12,18 +25,18 @@ export class ClienteRepository {
         this.client = new MongoClient(uri)
     }
 
-    private async connectAsync(){
+    private async connectAsync() {
         await this.client.connect()
         let db = this.client.db(this.dataBase)
-        this.collection = db.collection(this.collectionName)        
+        this.collection = db.collection(this.collectionName)
     }
 
     async agregarAsync(cliente: ClienteEntity): Promise<number> {
         await this.connectAsync()
         cliente.id = (await this.collection.countDocuments()) + 1;
-        console.log("clienteId", cliente.id)        
+        console.log("clienteId", cliente.id)
         await this.collection.insertOne(cliente)
-        
+
         return cliente.id
     }
 }

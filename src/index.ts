@@ -1,24 +1,25 @@
-import express, {Request, Response} from 'express'
+import express, { Request, Response } from 'express'
 import { IdDto } from './dtos/Id.dto'
 import { ClienteRouter } from './routes/cliente.route'
-import { DepositoRoute } from './routes/deposito.route'
+import { AhorroRoute } from './routes/ahorro.route'
 
 const app = express()
 const port = 8000
 const clienteRouter = new ClienteRouter()
-const depositoRouter = new DepositoRoute()
+const depositoRouter = new AhorroRoute()
 
 app.use(express.json())
 
-app.get('/', (req: Request, res: Response)=>{
+app.get('/', (req: Request, res: Response) => {
     let id = new IdDto("Hola mundo")
-    
-    res.status(200).json({mensaje: "Hola mundo"})
+
+    res.status(200).json({ mensaje: "Hola mundo" })
 })
 
 app.use("/api", clienteRouter.router)
 app.use("/api", depositoRouter.router)
 
-app.listen(port,()=>{
+app.listen(port, () => {
+    console.log("http://localhost:" + port)
     console.log("It's alive")
 })

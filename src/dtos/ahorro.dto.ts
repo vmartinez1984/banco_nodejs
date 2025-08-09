@@ -1,12 +1,14 @@
-export class DepositoDto {
+export class AhorroDto {
     numeroDeCuenta: string
-    nombre?: string
+    nombre: string
     clienteGuid?: string
     total?: number
+    clabe: string
 
     constructor(
         numeroDeCuenta: string,
-        nombre?: string,
+        clabe: string,
+        nombre: string,
         clienteGuid?: string,
         total?: number
     ) {
@@ -14,6 +16,7 @@ export class DepositoDto {
         this.nombre = nombre,
         this.clienteGuid = clienteGuid,
         this.total = total
+        this.clabe = clabe
     }
 
 }
