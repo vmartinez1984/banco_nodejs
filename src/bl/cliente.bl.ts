@@ -8,7 +8,7 @@ import { BanxicoService } from "../services/banxico.services";
 import { CurpService } from "../services/curp.services";
 
 export class ClienteBl {
-    
+
     private clienteRepository: ClienteRepository
     private ahorroRepository: DepositoRepository
     private curpService: CurpService
@@ -23,18 +23,16 @@ export class ClienteBl {
 
     async agregarAsync(cliente: ClienteDtoIn): Promise<number> {
         let clienteId = 0
-        let solicitudDeCurp
         let ahorroId
         let clabe
         let clienteEntity = cliente.toEntity()
         let ahorro = new AhorroEntity()
-        
+
         //Obtener el curp
-        solicitudDeCurp = this.obtenerSolicitudDeCurp(cliente)
-        clienteEntity.curp = await this.curpService.generarCurp(solicitudDeCurp)
+        clienteEntity.curp = await this.generarCurpAsync(cliente)
         clienteEntity.rfc = clienteEntity.curp.substring(0, 13) //mabv8412056ta
         //Registrar cliente
-        clienteId = await this.clienteRepository.agregarAsync(cliente.toEntity())        
+        clienteId = await this.clienteRepository.agregarAsync(clienteEntity)
         //Registrar el ahorro
         ahorro.clienteId = clienteId
         ahorro.clienteGuid = cliente.guid
@@ -49,8 +47,8 @@ export class ClienteBl {
         return clienteId
     }
 
-    private obtenerSolicitudDeCurp(cliente: ClienteDtoIn): SolicitudDeCurp {
-        let solicitudDeCurp: SolicitudDeCurp = {
+    async generarCurpAsync(cliente: ClienteDtoIn): Promise<string> {
+        const solicitudDeCurp: SolicitudDeCurp = {
             estado: cliente.estadoDeNacimiento,
             fechaDeNacimiento: cliente.fechaDeNacimiento,
             nombres: cliente.nombre,
@@ -58,7 +56,14 @@ export class ClienteBl {
             segundoApellido: cliente.segundoApellido,
             sexo: cliente.sexo
         }
+        const curp = await this.curpService.generarCurp(solicitudDeCurp)
 
-        return solicitudDeCurp
+        return curp
+    }
+
+    async existeClientePorCurpAsync(cliente:ClienteDtoIn){
+        const curp = await this.generarCurpAsync(cliente)
+
+        return await this.clienteRepository.existeAsync(curp)
     }
 }

@@ -3,9 +3,9 @@ import { IdDto } from './dtos/Id.dto'
 import { ClienteRouter } from './routes/cliente.route'
 import { AhorroRoute } from './routes/ahorro.route'
 import { SpeiRoute } from './routes/spei.route'
+import { port } from './helpers/config'
 
 const app = express()
-const port = 8000
 const clienteRouter = new ClienteRouter()
 const depositoRouter = new AhorroRoute()
 const speiRouter = new SpeiRoute()

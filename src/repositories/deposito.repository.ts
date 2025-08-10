@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb";
-import { AhorroEntity } from "../entities/ahorro.entity";
+import { AhorroEntity } from "../entities/ahorro.entity"
+import { url, dataBaseName } from "../helpers/config"
 
 export class DepositoRepository {
   async obtenerPorClabeAsync(clabe: string): Promise<AhorroEntity> {
@@ -28,19 +29,17 @@ export class DepositoRepository {
   }
 
   private client: MongoClient;
-  private collection: any;
-  private dataBase = "BancoNode";
+  private collection: any;  
   private collectionName = "depositos";
 
-  constructor() {
-    let uri = "mongodb://root:123456@localhost:27017/";
-    this.client = new MongoClient(uri);
+  constructor() {    
+    this.client = new MongoClient(url);
     //this.connectAsync()
   }
 
   private async connectAsync() {
     await this.client.connect();
-    let db = this.client.db(this.dataBase);
+    let db = this.client.db(dataBaseName);
     this.collection = db.collection(this.collectionName);
   }
 

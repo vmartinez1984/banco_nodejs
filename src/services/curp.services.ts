@@ -1,4 +1,5 @@
-import { SolicitudDeCurp } from "../dtos/solicitudDeCurp.dto";
+import { SolicitudDeCurp } from "../dtos/solicitudDeCurp.dto"
+import { baseUrlUtilerias } from '../helpers/config'
 
 export class CurpService {
 
@@ -16,7 +17,8 @@ export class CurpService {
             redirect: "follow"
         };
         let curp
-        let response = await fetch("http://localhost:8081/api/Curp", requestOptions)
+        const url = baseUrlUtilerias + "/api/Curp" 
+        const response = await fetch(url, requestOptions)
         if (response.ok)
             curp = await response.json()
         else

@@ -11,6 +11,10 @@ export class ClientesController {
 
   agregarAsync = async (req: Request, res: Response) => {
     let cliente = new ClienteDtoIn(req.body)
+    const existeCliente = await this.clienteBl.existeClientePorCurpAsync(cliente)
+    if(existeCliente)
+      return res.status(208).json({mensaje: "Carnalito con Curp registrada previamente"})
+
     this.clienteBl.agregarAsync(cliente)
 
     res.status(202).json(cliente);

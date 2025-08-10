@@ -1,21 +1,20 @@
 import { MongoClient } from "mongodb"
 import { MovimientoEntity } from "../entities/movimiento.entity"
+import { url, dataBaseName } from "../helpers/config"
 
 export class MovimientoRepository {
 
     private client: MongoClient
     private collection: any
-    private dataBase = "BancoNode"
     private collectionName = "movimientos"
 
-    constructor() {
-        let uri = "mongodb://root:123456@localhost:27017/"
-        this.client = new MongoClient(uri)
+    constructor() {        
+        this.client = new MongoClient(url)
     }
 
     private async connectAsync() {
         await this.client.connect()
-        let db = this.client.db(this.dataBase)
+        let db = this.client.db(dataBaseName)
         this.collection = db.collection(this.collectionName)
     }
 

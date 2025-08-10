@@ -12,6 +12,7 @@ export class SpeiRoute{
     }
 
     private setUpRoute(){
-        this.router.put("/speis/", this.speiController.actualizarEstadoDelSpei)        
+        this.router.put("/speis/", this.speiController.actualizarEstadoDelSpei)      
+        this.router.post("/speis/", this.speiController.recibirSpeiDesdeBanxico)
     }
 }

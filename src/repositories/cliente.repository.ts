@@ -1,7 +1,23 @@
 import { MongoClient } from "mongodb";
 import { ClienteEntity } from "../entities/cliente.entity";
+import { url, dataBaseName } from "../helpers/config"
 
 export class ClienteRepository {
+    private client: MongoClient
+    private collection: any
+    private collectionName = "clientes"
+
+    constructor() {
+        this.client = new MongoClient(url)
+    }
+
+    async existeAsync(curp: string) {
+        await this.connectAsync()
+        const numero = await this.collection.countDocuments({ curp: curp })
+
+        return numero == 0 ? false : true
+    }
+
     async obtenerPorIdAsync(clienteGuid: string): Promise<ClienteEntity> {
         let entities
 
@@ -16,19 +32,9 @@ export class ClienteRepository {
         return entities[0]
     }
 
-    private client: MongoClient
-    private collection: any
-    private dataBase = "BancoNode"
-    private collectionName = "clientes"
-
-    constructor() {
-        let uri = "mongodb://root:123456@localhost:27017/"
-        this.client = new MongoClient(uri)
-    }
-
     private async connectAsync() {
         await this.client.connect()
-        let db = this.client.db(this.dataBase)
+        let db = this.client.db(dataBaseName)
         this.collection = db.collection(this.collectionName)
     }
 

@@ -21,7 +21,7 @@ export class AhorroDto {
 
 }
 
-export interface DepositoDtoIn {
+export interface AhorroDtoIn {
     nombre: string
     clienteGuid: string
 }
@@ -40,13 +40,13 @@ export interface MovimientoDto {
 }
 
 export class MovimientoDtoIn {
-    cantidad: number        
+    monto: number        
     referencia: string
     concepto: string
     encodedKey: string
 
     constructor(body: any){
-        this.cantidad = body.cantidad        
+        this.monto = body.monto        
         this.referencia = body.referencia
         this.concepto = body.concepto
         this.encodedKey = body.encodedKey

@@ -19,4 +19,5 @@ export class AhorroEntity {
     this.nombre = nombre
     this.estado = "Activo"
   }
+  
 }

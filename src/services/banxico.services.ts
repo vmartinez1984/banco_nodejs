@@ -1,17 +1,13 @@
 import { SpeiOutDto } from "../dtos/spei.dto"
 import { ClabeInfoDto } from "../dtos/transferenciaPorClabe.dto"
 import { ClienteEntity } from "../entities/cliente.entity"
+import { baseUrlBanxico, numeroAbm, plaza } from '../helpers/config'
 
 export class BanxicoService {
-    private plaza: string
-    private numero: string
     private urlBase: string
 
     constructor() {
-        this.plaza = "180" //Ciudad de México
-        this.numero = "009" //Banobras
-        this.urlBase = "http://localhost:83"
-        //this.urlBase = "https://localhost:7110"
+        this.urlBase = baseUrlBanxico
     }
 
     async obtenerClabeAsync(ahorroId: number, cliente: ClienteEntity): Promise<string> {
@@ -21,8 +17,8 @@ export class BanxicoService {
         myHeaders.append("Content-Type", "application/json");
 
         const raw = JSON.stringify({
-            "plaza": this.plaza,
-            "numeroAbm": this.numero,
+            "plaza": plaza,
+            "numeroAbm": numeroAbm,
             "numeroDeCuenta": ahorroId.toString(),
             "telefono": cliente.telefono,
             "correo": cliente.correo,
@@ -108,7 +104,7 @@ export class BanxicoService {
         const response = await fetch(this.urlBase + "/api/Speis/Transferencias", requestOptions)
         if (response.ok) {
             const data = await response.json()
-            console.log("Respuesta banxico",data)
+            console.log("Respuesta banxico", data)
 
             //return clabeDto.clabe
         }
