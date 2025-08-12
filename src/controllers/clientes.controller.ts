@@ -1,19 +1,24 @@
 import { ClienteBl } from "../bl/cliente.bl";
 import { ClienteDtoIn } from "../dtos/cliente.dto";
 import { Request, Response } from "express"
+import { InicioDeSesionDto } from "../dtos/inicioDeSesion.dto";
 
 export class ClientesController {
-  private clienteBl: ClienteBl
+  iniciarSesionAsync = async (req: Request, res: Response) => {
+    const inicioDeSesionDto = new InicioDeSesionDto(req.body)    
 
-  constructor() {
-    this.clienteBl = new ClienteBl()
+    const token = await this.clienteBl.generarTokenAsync(inicioDeSesionDto)
+    if(token)
+      res.status(200).json()
+    else
+      res.status(404).json({mensaje:"Andas buscando, rogandole a Dios no encontrar" })
   }
 
   agregarAsync = async (req: Request, res: Response) => {
     let cliente = new ClienteDtoIn(req.body)
     const existeCliente = await this.clienteBl.existeClientePorCurpAsync(cliente)
-    if(existeCliente)
-      return res.status(208).json({mensaje: "Carnalito con Curp registrada previamente"})
+    if (existeCliente)
+      return res.status(208).json({ mensaje: "Carnalito con Curp registrada previamente" })
 
     this.clienteBl.agregarAsync(cliente)
 
@@ -24,8 +29,9 @@ export class ClientesController {
   //   throw new Error("Method not implemented.");
   // }
 
-  // iniciarSesionAsync(arg0: string, iniciarSesionAsync: any) {
-  //   throw new Error("Method not implemented.");
-  // }
+  private clienteBl: ClienteBl
 
+  constructor() {
+    this.clienteBl = new ClienteBl()
+  }
 }

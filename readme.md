@@ -8,3 +8,6 @@
 - [x] spei in
 - [ ] retiro
 - [x] Colocar el .env para que todas las constantes vengan de un solo origen
+- [ ] Dockerizar la app, base de datos
+- [ ] Validaciones y middleware para la validación
+- [ ] Persistir los logs, los errores y las peticiones de servicios

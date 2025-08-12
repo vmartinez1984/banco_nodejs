@@ -35,8 +35,18 @@ export class AhorroController {
         res.status(202).json(idDto)
     }
 
-    retirarAsync(depositoId: string, movimiento: MovimientoDtoIn) {
+    retirarAsync= async (req: Request, res: Response) => {
+        const retiro = new MovimientoDtoIn(req.body)
+        const ahorroId = req.params.ahorroId
+         // Se verifica que cuente con saldo
+        const ahorroDto = await this.ahorroBl.obtenerPorIdAsync(ahorroId)
+        console.log(ahorroDto)
+        if (retiro.monto > Number(ahorroDto.total))
+            return res.status(400).json({ mensaje: "Ni camarón tienes carnal" })        
 
+        const idDto = await this.ahorroBl.retirarAsync(ahorroId, retiro)
+
+        res.status(202).json(idDto)
     }
 
     transferirPorSpeiAsync = async (req: Request, res: Response) => {

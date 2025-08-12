@@ -14,6 +14,7 @@ export class AhorroRoute{
     private setUpRoute(){
         this.router.get("/ahorros/:clienteId", this.ahorroController.obtenerAsync)
         this.router.post("/ahorros/:ahorroId/depositos", this.ahorroController.depositarAsync)
+        this.router.post("/ahorros/:ahorroId/retiros", this.ahorroController.retirarAsync)
         this.router.post("/ahorros/:ahorroId/transferenciasSpei", this.ahorroController.transferirPorSpeiAsync)
     }
 }

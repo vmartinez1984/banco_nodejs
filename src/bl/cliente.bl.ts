@@ -1,6 +1,8 @@
 import { ClienteDtoIn } from "../dtos/cliente.dto";
 import { IdDto } from "../dtos/Id.dto";
+import { InicioDeSesionDto } from "../dtos/inicioDeSesion.dto";
 import { SolicitudDeCurp } from "../dtos/solicitudDeCurp.dto";
+import { TokenDto } from "../dtos/token.dto";
 import { AhorroEntity } from "../entities/ahorro.entity";
 import { ClienteRepository } from "../repositories/cliente.repository";
 import { DepositoRepository } from "../repositories/deposito.repository";
@@ -8,6 +10,9 @@ import { BanxicoService } from "../services/banxico.services";
 import { CurpService } from "../services/curp.services";
 
 export class ClienteBl {
+    generarTokenAsync(inicioDeSesion: InicioDeSesionDto): TokenDto | undefined {
+        return undefined
+    }
 
     private clienteRepository: ClienteRepository
     private ahorroRepository: DepositoRepository

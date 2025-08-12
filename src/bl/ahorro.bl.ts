@@ -207,22 +207,22 @@ export class AhorroBl {
   }
 
   async retirarAsync(
-    depositoId: string,
-    deposito: MovimientoDtoIn
+    ahorroId: string,
+    retiro: MovimientoDtoIn
   ): Promise<number> {
-    const ahorro = await this.ahorroRepository.obtenerPorIdAsync(depositoId);
-    if (deposito.monto > Number(ahorro.saldo))
+    const ahorro = await this.ahorroRepository.obtenerPorIdAsync(ahorroId);
+    if (retiro.monto > Number(ahorro.saldo))
       throw new Error("Saldo insuficiente para retirar");
     let movimientoEntity: MovimientoEntity = {
       canalEncodedkey: "cash",
-      monto: deposito.monto,
+      monto: retiro.monto,
       saldoInicial: ahorro.saldo,
-      saldoFinal: ahorro.saldo + deposito.monto,
-      concepto: deposito.concepto,
+      saldoFinal: ahorro.saldo + retiro.monto,
+      concepto: retiro.concepto,
       ahorroEncodedKey: ahorro.guid,
       ahorroId: ahorro.id,
-      encodedKey: deposito.encodedKey,
-      referencia: deposito.referencia,
+      encodedKey: retiro.encodedKey,
+      referencia: retiro.referencia,
       tipo: "deposito",
       id: 0,
     };
