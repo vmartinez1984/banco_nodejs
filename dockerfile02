@@ -1,0 +1,18 @@
+# Etapa 1: Compilación
+FROM node:18 AS builder
+
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+# Compila TS -> JS
+RUN npm run build   
+
+# Etapa 2: Imagen ligera de producción
+FROM node:18-slim
+
+WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app/package*.json ./
+RUN npm install --only=production
+COPY --from=builder /usr/src/app/dist ./dist
+CMD ["node", "dist/app.js"]
