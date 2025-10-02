@@ -4,7 +4,7 @@ import { TranferenciaPorSpeiDto } from "../dtos/transferenciaPorClabe.dto";
 import { AhorroEntity } from "../entities/ahorro.entity";
 import { MovimientoEntity } from "../entities/movimiento.entity";
 import { ClienteRepository } from "../repositories/cliente.repository";
-import { DepositoRepository } from "../repositories/deposito.repository";
+import { AhorroRepository } from "../repositories/ahorro.repository";
 import { MovimientoRepository } from "../repositories/movimiento.repository";
 import { BanxicoService } from "../services/banxico.services";
 
@@ -264,13 +264,13 @@ export class AhorroBl {
     return movimientoId;
   }
 
-  private ahorroRepository: DepositoRepository;
+  private ahorroRepository: AhorroRepository;
   private movimientoRepository: MovimientoRepository;
   private banxicoService: BanxicoService;
   private clienteRepository: ClienteRepository;
 
   constructor() {
-    this.ahorroRepository = new DepositoRepository();
+    this.ahorroRepository = new AhorroRepository();
     this.movimientoRepository = new MovimientoRepository();
     this.banxicoService = new BanxicoService();
     this.clienteRepository = new ClienteRepository();

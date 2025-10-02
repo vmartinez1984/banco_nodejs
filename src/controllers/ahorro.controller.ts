@@ -19,7 +19,9 @@ export class AhorroController {
         let clienteId
         let ahorros
 
-        clienteId = req.params.clienteId
+        //clienteId = req.params.clienteId 
+        clienteId = (req as any).user.encodedkey
+        console.log(clienteId)
         ahorros = await this.ahorroBl.obtenerPorClienteIdAsync(clienteId)
 
         res.status(200).json(ahorros)

@@ -9,7 +9,7 @@ export class ClientesController {
 
     const token = await this.clienteBl.generarTokenAsync(inicioDeSesionDto)
     if(token)
-      res.status(200).json()
+      res.status(200).json(token)
     else
       res.status(404).json({mensaje:"Andas buscando, rogandole a Dios no encontrar" })
   }

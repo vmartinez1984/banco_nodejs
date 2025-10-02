@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 import { AhorroEntity } from "../entities/ahorro.entity"
 import { url, dataBaseName } from "../helpers/config"
 
-export class DepositoRepository {
+export class AhorroRepository {
   async obtenerPorClabeAsync(clabe: string): Promise<AhorroEntity> {
     let entities;
 
@@ -29,10 +29,10 @@ export class DepositoRepository {
   }
 
   private client: MongoClient;
-  private collection: any;  
+  private collection: any;
   private collectionName = "depositos";
 
-  constructor() {    
+  constructor() {
     this.client = new MongoClient(url);
     //this.connectAsync()
   }
@@ -47,15 +47,20 @@ export class DepositoRepository {
     let entities;
 
     await this.connectAsync();
-    if (parseInt(clienteId))
+    //console.log(clienteId)
+    if (!isNaN(parseInt(clienteId, 10)) && Number.isInteger(Number(clienteId))) {
       entities = await this.collection
         .find({ clienteId: Number(clienteId) })
         .toArray();
-    else
+    }
+    else {
+      console.log("Por clienteGuid")
+
       entities = await this.collection
         .find({ clienteGuid: clienteId })
         .toArray();
-    //console.log("entities", entities)
+    }
+    console.log("entities", entities)
 
     return entities;
   }

@@ -5,25 +5,45 @@ import { SolicitudDeCurp } from "../dtos/solicitudDeCurp.dto";
 import { TokenDto } from "../dtos/token.dto";
 import { AhorroEntity } from "../entities/ahorro.entity";
 import { ClienteRepository } from "../repositories/cliente.repository";
-import { DepositoRepository } from "../repositories/deposito.repository";
+import { AhorroRepository } from "../repositories/ahorro.repository";
+import { Repositorio } from "../repositories/repositorio.repository";
 import { BanxicoService } from "../services/banxico.services";
 import { CurpService } from "../services/curp.services";
+import  jwt  from "jsonwebtoken"
+const secret = "VineAComalaABuscarAMiPadreUnTalPedroParamo"
 
 export class ClienteBl {
-    generarTokenAsync(inicioDeSesion: InicioDeSesionDto): TokenDto | undefined {
-        return undefined
+
+    async generarTokenAsync(inicioDeSesion: InicioDeSesionDto): Promise<TokenDto | undefined> {
+        var cliente = await this.repositorio.cliente.obtenerPorCorreoAsync(inicioDeSesion.correo)
+        if(cliente == undefined)
+            return undefined
+        if(cliente.contrasenia != inicioDeSesion.contrasenia)
+            return undefined
+        const payload={
+            nombre: cliente.nombre + " " +cliente.primerApellido,
+            encodedkey : cliente.guid
+        }
+        const token = jwt.sign(payload,secret, {expiresIn: "20m"} )
+        const tokenDto: TokenDto = {
+            token,
+            fecha: new Date()
+        }
+        return tokenDto
     }
 
     private clienteRepository: ClienteRepository
-    private ahorroRepository: DepositoRepository
+    private ahorroRepository: AhorroRepository
     private curpService: CurpService
     private clabeService: BanxicoService
+    private repositorio: Repositorio
 
     constructor() {
         this.clienteRepository = new ClienteRepository()
-        this.ahorroRepository = new DepositoRepository()
+        this.ahorroRepository = new AhorroRepository()
         this.curpService = new CurpService()
         this.clabeService = new BanxicoService()
+        this.repositorio = new Repositorio()
     }
 
     async agregarAsync(cliente: ClienteDtoIn): Promise<number> {

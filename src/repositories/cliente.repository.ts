@@ -11,7 +11,18 @@ export class ClienteRepository {
         this.client = new MongoClient(url)
     }
 
-    async existeAsync(curp: string) {
+    async obtenerPorCorreoAsync(correo: string): Promise<ClienteEntity | undefined> {
+        let entities
+
+        await this.connectAsync()
+        entities = await this.collection.find({ correo: correo }).toArray()
+        console.log(entities)
+        if (entities.length == 0)
+            return undefined
+        return entities[0]
+    }
+
+    async existeAsync(curp: string): Promise<boolean> {
         await this.connectAsync()
         const numero = await this.collection.countDocuments({ curp: curp })
 

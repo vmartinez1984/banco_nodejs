@@ -11,3 +11,7 @@
 - [ ] Dockerizar la app, base de datos
 - [ ] Validaciones y middleware para la validación
 - [ ] Persistir los logs, los errores y las peticiones de servicios
+- [ ] Fecha en los movimientos
+
+npm install jsonwebtoken
+npm install --save-dev @types/jsonwebtoken
